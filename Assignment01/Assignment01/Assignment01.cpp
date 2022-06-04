@@ -20,9 +20,15 @@ int main() {
 	myList.Remove(5);
 	myList.Show();
 
-	myList.Clear();
+	// myList.Clear();
 	myList.Show();
 
-	return 0;
+
+	// CODE FROM LECTURE NOTE
+	Node* head = myList.Show_head();
+	myList.Show_rec(head);
+
+
+	return 0;  // END OF MAIN
 
 }

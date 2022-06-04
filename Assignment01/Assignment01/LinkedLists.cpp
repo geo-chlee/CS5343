@@ -76,6 +76,7 @@ void SingleLinkedList::Remove(DataType _value) {
     }
 }
 
+
 void SingleLinkedList::Insert(int idx, DataType _value) {
     if (idx > Size() || idx < 0) {
         std::cout << "Invalid index number" << std::endl;
@@ -135,6 +136,14 @@ void SingleLinkedList::Show() {
     std::cout << std::endl;
 }
 
+Node* SingleLinkedList::Show_head() {
+    if (head == nullptr) {
+        std::cout << "List is empty" << std::endl;
+        return NULL;
+    }
+    return head;
+}
+
 DataType SingleLinkedList::At(int idx) {
     if (idx > Size() || idx < 0) {
         std::cout << "Invalid index number" << std::endl;
@@ -165,3 +174,19 @@ int SingleLinkedList::Size() {
 
     return size;
 }
+
+// From the LECTURE NOTE
+
+void SingleLinkedList::Show_rec(Node* node) {   
+    if (node == nullptr) {
+        std::cout << "END" << std::endl;
+        return;
+    }
+    
+    std::cout << node->data << " ";
+    Show_rec(node->next);
+}
+
+//void SingleLinkedList::Remove(DataType _value) {
+//    
+//}

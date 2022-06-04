@@ -27,7 +27,11 @@ public:
 	void Insert(int idx, DataType _value);	// Insert data
 	void Clear();							// Delete list
 	void Show();							// Print list
+	Node* Show_head();	// Show head in the specified list
 
 	DataType At(int idx);					// Return value at idx
 	int Size();								// Return whole size of list
+		
+	// From the LECTURE NOTE CODE
+	void Show_rec(Node* head);						// Recursive Call form
 };
