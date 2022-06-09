@@ -34,4 +34,7 @@ public:
 		
 	// From the LECTURE NOTE CODE
 	void Show_rec(Node* head);						// Recursive Call form
+	void bubblesort();			// bubble Sort - linked list
+	void swapNode(Node* node);		// swap NODEs in order
+	bool check_continue();				// check the sort result
 };

@@ -28,7 +28,7 @@ void SingleLinkedList::Push_Back(DataType _value) {
     }
     else {
         while (tail->next != nullptr) {
-            tail = tail->next;
+            tail = tail->next;  // move the cursor to the tail in list
         }
         tail->next = node;
     }
@@ -126,7 +126,7 @@ void SingleLinkedList::Show() {
 
     Node* node = head;
 
-    std::cout << "List elements: ";
+    std::cout << "Traverse List elements: ";
 
     while (node != nullptr) {
         std::cout << node->data << " ";
@@ -185,6 +185,71 @@ void SingleLinkedList::Show_rec(Node* node) {
     
     std::cout << node->data << " ";
     Show_rec(node->next);
+}
+
+void SingleLinkedList::bubblesort() {
+    if (head == nullptr) {
+        std::cout << "NO NODE HERE" << std::endl;
+        return;
+     }
+    bool flag = true;
+    Node* curr = head;
+    Node* curNext = head->next;
+    Node* prev = nullptr;
+
+    while (flag == true) {
+        if (curNext != nullptr &&curr->data <= curNext->data) {
+            prev = curr;
+            curr = curNext;
+            curNext = curNext->next;
+        }
+        if (curNext != nullptr&&curr->data > curNext->data) {
+            swapNode(prev);
+            curr = curNext;
+            curNext = curNext->next;
+        }
+        if (curNext == nullptr) {
+            flag = check_continue();
+            curr = head;
+            curNext = head->next;
+        }
+    }    
+}
+
+void SingleLinkedList::swapNode(Node* prev) {
+    Node* tmp;
+    if (prev == nullptr) {
+        tmp = head;
+        tmp->next = head->next->next;
+        head = head->next;
+        head->next = tmp;
+    }
+    else {
+        Node* b1 = prev->next;
+        Node* b2 = prev->next->next;
+        Node* b3 = prev->next->next->next;
+        
+        prev->next = b2;
+        b2->next = b1;
+        b1->next = b3;
+        
+    }
+}
+
+ bool SingleLinkedList::check_continue() {
+     Node* curr = head;
+     Node* curNext = head->next;
+
+     while (curNext != nullptr) {
+         if (curr->data <= curNext->data) {
+             curr = curNext;
+             curNext = curNext->next;
+         }
+         else {
+             return true;
+         }
+     }
+     return false;
 }
 
 //void SingleLinkedList::Remove(DataType _value) {
