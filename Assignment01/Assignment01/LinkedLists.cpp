@@ -1,0 +1,257 @@
+#include "LinkedList.h"
+
+void SingleLinkedList::Push_Front(DataType _value) {
+    Node* node = new Node;   // defined in .h as structure
+
+    node->data = _value;    // since node is pointer so when we input value, use arrow (->)
+    node->next = nullptr;    // null pointer value
+
+    if (head == nullptr) {
+        head = node;
+    }
+    else {
+        node->next = head;  // the existing head must be next after new head
+        head = node;        // assign node to head
+    }
+}
+
+void SingleLinkedList::Push_Back(DataType _value) {
+    Node* tail = head;
+    Node* node = new Node;
+
+    node->data = _value;
+    node->next = nullptr;
+
+    if (head == nullptr)
+    {
+        head = node;
+    }
+    else {
+        while (tail->next != nullptr) {
+            tail = tail->next;  // move the cursor to the tail in list
+        }
+        tail->next = node;
+    }
+}
+
+void SingleLinkedList::Pop_Front() {
+    Node* cur = head;
+    head = cur->next;
+
+    delete cur;
+}
+
+void SingleLinkedList::Pop_Back() {
+    Node* cur = head;
+    Node* prev = head;
+}
+
+void SingleLinkedList::Remove(DataType _value) {
+    if (head == nullptr) {
+        std::cout << "List is empty" << std::endl;
+        return;
+    }
+
+    Node* cur = head;
+    Node* prev = cur;
+
+    while (cur != nullptr) {
+        if (cur->data == _value) {
+            if (cur == head) {
+                Pop_Front();
+                cur = head;
+                prev = cur;
+            }
+            else {
+                prev->next = cur->next;
+
+                delete cur;
+                cur = prev->next;
+            }
+        }
+        else {
+            prev = cur;
+            cur = cur->next;
+        }
+    }
+}
+
+
+void SingleLinkedList::Insert(int idx, DataType _value) {
+    if (idx > Size() || idx < 0) {
+        std::cout << "Invalid index number" << std::endl;
+        return;
+    }
+    else if (idx == 0) {
+        Push_Front(_value);
+        return;
+    }
+    else if (idx == Size()) {
+        Push_Back(_value);
+        return;
+    }
+
+    Node* cur = head;
+    Node* prev = head;
+    Node* node = new Node;
+
+    node->data = _value;
+    node->next = nullptr;
+
+    for (int i = 0; i < idx; i++) {
+        prev = cur;
+        cur = cur->next;
+    }
+
+    prev->next = node;
+    node->next = cur;
+}
+
+void SingleLinkedList::Clear() {
+    Node* cur = head;
+
+    while (cur != nullptr) {
+        head = cur->next;
+
+        delete cur;
+        cur = head;
+    }
+}
+
+void SingleLinkedList::Show() {
+    if (head == nullptr) {
+        std::cout << "List is empty" << std::endl;
+        return;
+    }
+
+    Node* node = head;
+
+    std::cout << "Traverse List elements: ";
+
+    while (node != nullptr) {
+        std::cout << node->data << " ";
+        node = node->next;
+    }
+
+    std::cout << std::endl;
+}
+
+Node* SingleLinkedList::Show_head() {
+    if (head == nullptr) {
+        std::cout << "List is empty" << std::endl;
+        return NULL;
+    }
+    return head;
+}
+
+DataType SingleLinkedList::At(int idx) {
+    if (idx > Size() || idx < 0) {
+        std::cout << "Invalid index number" << std::endl;
+        return NULL;
+    }
+
+    Node* cur = head;
+
+    for (int i = 0; i < idx; i++) {
+        cur = cur->next;
+    }
+
+    return cur->data;
+}
+
+int SingleLinkedList::Size() {
+    if (head == nullptr) {
+        return 0;
+    }
+
+    Node* cur = head;
+    int size = 0;
+
+    while (cur != nullptr) {
+        size++;
+        cur = cur->next;
+    }
+
+    return size;
+}
+
+// From the LECTURE NOTE
+
+void SingleLinkedList::Show_rec(Node* node) {   
+    if (node == nullptr) {
+        std::cout << "END" << std::endl;
+        return;
+    }
+    
+    std::cout << node->data << " ";
+    Show_rec(node->next);
+}
+
+void SingleLinkedList::bubblesort() {
+    if (head == nullptr) {
+        std::cout << "NO NODE HERE" << std::endl;
+        return;
+     }
+    bool flag = true;
+    Node* curr = head;
+    Node* curNext = head->next;
+    Node* prev = nullptr;
+
+    while (flag == true) {
+        if (curNext != nullptr &&curr->data <= curNext->data) {
+            prev = curr;
+            curr = curNext;
+            curNext = curNext->next;
+        }
+        if (curNext != nullptr&&curr->data > curNext->data) {
+            swapNode(prev);
+            curr = curNext;
+            curNext = curNext->next;
+        }
+        if (curNext == nullptr) {
+            flag = check_continue();
+            curr = head;
+            curNext = head->next;
+        }
+    }    
+}
+
+void SingleLinkedList::swapNode(Node* prev) {
+    Node* tmp;
+    if (prev == nullptr) {
+        tmp = head;
+        tmp->next = head->next->next;
+        head = head->next;
+        head->next = tmp;
+    }
+    else {
+        Node* b1 = prev->next;
+        Node* b2 = prev->next->next;
+        Node* b3 = prev->next->next->next;
+        
+        prev->next = b2;
+        b2->next = b1;
+        b1->next = b3;
+        
+    }
+}
+
+ bool SingleLinkedList::check_continue() {
+     Node* curr = head;
+     Node* curNext = head->next;
+
+     while (curNext != nullptr) {
+         if (curr->data <= curNext->data) {
+             curr = curNext;
+             curNext = curNext->next;
+         }
+         else {
+             return true;
+         }
+     }
+     return false;
+}
+
+//void SingleLinkedList::Remove(DataType _value) {
+//    
+//}
